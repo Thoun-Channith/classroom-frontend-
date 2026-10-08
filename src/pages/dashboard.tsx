@@ -1,9 +1,7 @@
-import React from "react";
+import SubjectsList from "./subjects/list";
 
 const Dashboard = () => {
-    return (
-        <div>Dashboard</div>
-    )
-}
+    return <SubjectsList />;
+};
 
 export default Dashboard;
