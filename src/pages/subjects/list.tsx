@@ -10,7 +10,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
-import { DEPARTMENT_OPTION } from "@/constants";
+import { DEPARTMENT_OPTIONS } from "@/constants";
 import { Search } from "lucide-react";
 import { useMemo, useState } from "react";
 import { Subject } from "@/types";
@@ -34,7 +34,7 @@ const SubjectsList = () => {
         {field: 'name', operator: 'contains' as const, value: searchQuery}
     ] : [];
 
-    const subjectTable = useTable<Subject>({
+    const subjectColumn = useTable<Subject>({
         columns: useMemo<ColumnDef<Subject>[]>(() => [
             {
                 id: "code",
@@ -53,7 +53,7 @@ const SubjectsList = () => {
             },
             {
                 id: "department",
-                accessorKey: "department",
+                accessorKey: "department.name",
                 size: 150,
                 header: () => <p className="column-title">Department</p>,
                 cell: ({ getValue }) => <Badge variant='secondary'>{getValue<string>()}</Badge>,
@@ -100,7 +100,7 @@ const SubjectsList = () => {
 
                         <Input
                             type="text"
-                            placeholder="Search By name..."
+                            placeholder="Search by name or code..."
                             className="pl-10 w-full "
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
@@ -118,7 +118,7 @@ const SubjectsList = () => {
 
                             <SelectContent>
                                 <SelectItem value="all">All Department</SelectItem>
-                                {DEPARTMENT_OPTION.map((department) => (
+                                {DEPARTMENT_OPTIONS.map((department) => (
                                     <SelectItem key={department.value} value={department.value}>
                                         {department.value}
                                     </SelectItem>
@@ -129,7 +129,7 @@ const SubjectsList = () => {
                     </div>
                 </div>
             </div>
-            <DataTable table={subjectTable} />
+            <DataTable table={subjectColumn} />
         </ListView>
     );
 };
